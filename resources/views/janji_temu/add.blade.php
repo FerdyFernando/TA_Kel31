@@ -11,7 +11,7 @@
 </div>
 @endif
 
-<div class="card mt-4">
+<div class="card mt-4 bg-dark text-white">
     <div class="card-body">
         <h5 class="card-title fw-bolder mb-3">Tambah Janji Temu</h5>
         <form method="post" action="{{route('janji_temu.store')}}">

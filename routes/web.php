@@ -12,6 +12,8 @@ Route::post('/dokter/store', [dokterController::class, 'store'])->name('dokter.s
 Route::get('/dokter/edit/{id}', [dokterController::class, 'edit'])->name('dokter.edit');
 Route::post('/dokter/update/{id}', [dokterController::class, 'update'])->name('dokter.update');
 Route::post('/dokter/delete/{id}', [dokterController::class, 'delete'])->name('dokter.delete');
+Route::get('/dokter/show/{id}', [dokterController::class, 'show'])->name('dokter.show');
+
 
 Route::get('/janji_temu', [janji_temuController::class, 'index'])->name('janji_temu.index');
 Route::get('/janji_temu/add', [janji_temuController::class, 'create'])->name('janji_temu.create');

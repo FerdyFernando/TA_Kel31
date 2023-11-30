@@ -12,12 +12,12 @@
 </div>
 @endif
 
-<table class="table table-hover mt-2">
+<table class="table table-hover table-dark mt-2">
     <thead>
         <tr>
             <th>No.</th>
-            <th>ID Dokter</th>
-            <th>ID Pasien</th>
+            <th>Dokter</th>
+            <th>Pasien</th>
             <th>Keluhan</th>
             <th>Tanggal temu</th>
             <th>Waktu temu</th>
@@ -28,8 +28,8 @@
         @foreach ($datas as $data)
         <tr>
             <td>{{ $data->id_appointment }}</td>
-            <td>{{ $data->id_dokter }}</td>
-            <td>{{ $data->id_pasien }}</td>
+            <td>{{ $data->nama_dokter }}</td>
+            <td>{{ $data->nama_pasien }}</td>
             <td>{{ $data->keluhan }}</td>
             <td>{{ $data->tanggal_temu }}</td>
             <td>{{ $data->waktu_temu }}</td>
@@ -45,7 +45,7 @@
                 <!-- Modal -->
                 <div class="modal fade" id="hapusModal{{ $data->id_appointment }}" tabindex="-1"
                     aria-labelledby="hapusModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog text-dark">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="hapusModalLabel">Konfirmasi</h5>

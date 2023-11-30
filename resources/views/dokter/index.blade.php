@@ -12,7 +12,7 @@
 </div>
 @endif
 
-<table class="table table-hover mt-2">
+<table class="table table-hover table-dark mt-2">
     <thead>
         <tr>
             <th>No.</th>
@@ -30,6 +30,8 @@
             <td>{{ $data->spesialis }}</td>
             <td>{{ $data->no_telp }}</td>
             <td>
+                <a href="{{ route('dokter.show', $data->id_dokter) }}" 
+                class="btn btn-info rounded-3">Detail</a>
                 <a href="{{ route('dokter.edit', $data->id_dokter) }}" type="button"
                     class="btn btn-warning rounded-3">Ubah</a>
             <!-- Button trigger modal -->
@@ -41,7 +43,7 @@
                 <!-- Modal -->
                 <div class="modal fade" id="hapusModal{{ $data->id_dokter }}" tabindex="-1"
                     aria-labelledby="hapusModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog text-dark">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="hapusModalLabel">Konfirmasi</h5>

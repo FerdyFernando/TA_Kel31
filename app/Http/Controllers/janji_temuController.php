@@ -38,7 +38,9 @@ class janji_temuController extends Controller
 
     public function index()
     {
-        $datas = DB::select('select * from janji_temu');
+        $datas = DB::select('select * from janji_temu
+        inner join dokter on janji_temu.id_dokter=dokter.id_dokter
+        inner join pasien on janji_temu.id_pasien=pasien.id_pasien');
         return view('janji_temu.index')->with('datas', $datas);
     }
 

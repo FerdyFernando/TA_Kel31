@@ -12,18 +12,60 @@
     <style>
         body {
             font-family: 'Nunito', sans-serif;
+            background-color: #121212; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+
+        .navbar {
+            background-color: #343a40 !important; /* Dark navbar background color */
+        }
+
+        .nav-link {
+            color: #ffffff !important; /* Light text color for links */
+        }
+
+        .nav-link:hover {
+            color: #17a2b8 !important; /* Light text color for links on hover */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: relative;
+            }
+
+            .navbar-toggler {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
         }
     </style>
 </head>
 <body class="antialiased">
-    <nav class="navbar bg-light">
-        <div class="container-fluid d-flex justify-content-center"> <!-- Updated class to center items -->
-            <a class="nav-link mx-5" href="{{ route('dokter.index') }}">Dokter</a> <!-- Added mx-3 for margin -->
-                
-            <a class="nav-link mx-5" href="{{ route('pasien.index') }}">Pasien</a> <!-- Added mx-3 for margin -->
-    
-            <a class="nav-link mx-5" href="{{ route('janji_temu.index') }}">Janji Temu</a> <!-- Added mx-3 for margin -->
-              
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Kelompok 31</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('pasien.index') }}">Pasien</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('janji_temu.index') }}">Janji Temu</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container">

@@ -12,13 +12,14 @@
 </div>
 @endif
 
-<table class="table table-hover mt-2">
+<table class="table table-hover table-dark mt-2">
     <thead>
         <tr>
             <th>No.</th>
             <th>Nama</th>
             <th>Alamat</th>
             <th>No. Telp</th>
+            <th>Jadwal Janji Temu</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
             <td>{{ $data->nama_pasien }}</td>
             <td>{{ $data->alamat }}</td>
             <td>{{ $data->no_telp }}</td>
+            <td>{{ $data->tanggal_temu }}</td>
             <td>
                 <a href="{{ route('pasien.edit', $data->id_pasien) }}" type="button"
                     class="btn btn-warning rounded-3">Ubah</a>
@@ -41,7 +43,7 @@
                 <!-- Modal -->
                 <div class="modal fade" id="hapusModal{{ $data->id_pasien }}" tabindex="-1"
                     aria-labelledby="hapusModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog text-dark">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="hapusModalLabel">Konfirmasi</h5>
@@ -50,7 +52,7 @@
                             </div>
                             <form method="POST" action="{{ route('pasien.delete', $data->id_pasien) }}">
                                 @csrf
-                                <div class="modal-body">
+                                <div class="modal-body text-dark">
                                     Apakah anda yakin ingin menghapus data ini?
                                 </div>
                                 <div class="modal-footer">

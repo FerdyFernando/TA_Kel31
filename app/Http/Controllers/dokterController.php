@@ -44,6 +44,27 @@ class dokterController extends Controller
         return view('dokter.edit')->with('data', $data);
     }
 
+    public function show($id)
+    {
+        $data = DB::table('dokter')
+            ->select('*')
+            ->join('janji_temu', 'dokter.id_dokter', '=', 'janji_temu.id_dokter')
+            ->where('dokter.id_dokter', $id)
+            ->first();
+    
+        $datas = DB::table('janji_temu')
+            ->select('*')
+            ->join('pasien', 'janji_temu.id_pasien', '=', 'pasien.id_pasien')
+            ->where('id_dokter', $id)
+            ->orderBy('tanggal_temu', 'asc')
+            ->get();
+    
+        return view('dokter.show', compact('data', 'datas'));
+    }
+    
+    
+
+
     
     public function update($id, Request $request)
     {
@@ -72,6 +93,8 @@ class dokterController extends Controller
         DB::delete('DELETE FROM dokter WHERE id_dokter = :id_dokter', ['id_dokter' => $id]);
         return redirect()->route('dokter.index')->with('success', 'Data Dokter berhasil dihapus');
     }
+
+    
 
         
 
