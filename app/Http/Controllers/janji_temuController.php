@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\janji_temu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,11 +38,15 @@ class janji_temuController extends Controller
 
     public function index()
     {
-        $datas = DB::select('select * from janji_temu
-        inner join dokter on janji_temu.id_dokter=dokter.id_dokter
-        inner join pasien on janji_temu.id_pasien=pasien.id_pasien');
+        // Use leftJoin to include deleted records
+        $datas = janji_temu::leftJoin('dokter', 'janji_temu.id_dokter', '=', 'dokter.id_dokter')
+            ->leftJoin('pasien', 'janji_temu.id_pasien', '=', 'pasien.id_pasien')
+            ->get();
+
         return view('janji_temu.index')->with('datas', $datas);
     }
+
+
 
     public function edit($id)
     {
@@ -79,7 +83,37 @@ class janji_temuController extends Controller
 
     public function delete($id)
     {
-        DB::delete('DELETE FROM janji_temu WHERE id_appointment = :id_appointment', ['id_appointment' => $id]);
-        return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil dihapus');
+        try {
+            // Soft delete the record
+            janji_temu::destroy($id);
+            return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil dihapus');
+        } catch (\Exception $e) {
+            dd($e->getMessage()); // Output the error message for debugging
+        }
     }
+
+    public function restore($id)
+{
+    janji_temu::withTrashed()->where('id_appointment', $id)->restore();
+    return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil direstore');
+}
+
+public function forceDelete($id)
+{
+    janji_temu::withTrashed()->where('id_appointment', $id)->forceDelete();
+    return redirect()->route('janji_temu.trash')->with('success', 'Data Janji Temu berhasil dihapus permanen');
+}
+
+public function trash()
+{
+    $trashedDatas = janji_temu::onlyTrashed()
+        ->join('dokter', 'janji_temu.id_dokter', '=', 'dokter.id_dokter')
+        ->join('pasien', 'janji_temu.id_pasien', '=', 'pasien.id_pasien')
+        ->select('janji_temu.*', 'dokter.nama_dokter', 'pasien.nama_pasien')
+        ->get();
+
+    return view('janji_temu.trashdata')->with('trashedDatas', $trashedDatas);
+}
+
+
 }

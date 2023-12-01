@@ -64,6 +64,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('janji_temu.index') }}">Janji Temu</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('janji_temu.trash') }}">Trashed Data</a>
+                    </li>
                 </ul>
             </div>
         </div>

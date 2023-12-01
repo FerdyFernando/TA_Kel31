@@ -38,9 +38,9 @@
                     class="btn btn-warning rounded-3">Ubah</a>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#hapusModal{{ $data->id_appointment }}">
-                    Hapus
-                </button>
+                        data-bs-target="#hapusModal{{ $data->id_appointment }}">
+                        Hapus
+                    </button>
 
                 <!-- Modal -->
                 <div class="modal fade" id="hapusModal{{ $data->id_appointment }}" tabindex="-1"
@@ -53,6 +53,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <form method="POST" action="{{ route('janji_temu.delete', $data->id_appointment) }}">
+
                                 @csrf
                                 <div class="modal-body">
                                     Apakah anda yakin ingin menghapus data ini?
@@ -66,6 +67,7 @@
                         </div>
                     </div>
                 </div>
+               
             </td>
 
 

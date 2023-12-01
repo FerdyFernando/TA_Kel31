@@ -21,6 +21,11 @@ Route::post('/janji_temu/store', [janji_temuController::class, 'store'])->name('
 Route::get('/janji_temu/edit/{id}', [janji_temuController::class, 'edit'])->name('janji_temu.edit');
 Route::post('/janji_temu/update/{id}', [janji_temuController::class, 'update'])->name('janji_temu.update');
 Route::post('/janji_temu/delete/{id}', [janji_temuController::class, 'delete'])->name('janji_temu.delete');
+Route::get('/janji_temu/trash', [janji_temuController::class, 'trash'])->name('janji_temu.trash');
+Route::get('/janji_temu/restore/{id}', [janji_temuController::class, 'restore'])->name('janji_temu.restore');
+Route::get('/janji_temu/forceDelete/{id}', [janji_temuController::class, 'forceDelete'])->name('janji_temu.forceDelete');
+
+
 
 Route::get('/pasien', [pasienController::class, 'index'])->name('pasien.index');
 Route::get('/pasien/add', [pasienController::class, 'create'])->name('pasien.create');
