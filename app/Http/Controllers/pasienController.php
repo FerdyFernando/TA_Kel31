@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Pasien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class pasienController extends Controller
 {
@@ -33,11 +34,12 @@ class pasienController extends Controller
     }
 
     public function index()
-    {
-        $datas = DB::select('select * from pasien inner join janji_temu where pasien.id_pasien
-        = janji_temu.id_pasien');
-        return view('pasien.index')->with('datas', $datas);
-    }
+{
+   
+    $datas = DB::table('pasien')->whereNull('deleted_at')->get();
+
+    return view('pasien.index')->with('datas', $datas);
+}
 
     public function edit($id)
     {
@@ -68,9 +70,32 @@ class pasienController extends Controller
         return redirect()->route('pasien.index')->with('success', 'Data Pasien berhasil diubah');
     }
 
-    public function delete($id)
-    {
-        DB::delete('DELETE FROM pasien WHERE id_pasien = :id_pasien', ['id_pasien' => $id]);
-        return redirect()->route('pasien.index')->with('success', 'Data Pasien berhasil dihapus');
-    }
+
+
+public function delete($id)
+{
+    // Soft delete data
+    DB::table('pasien')->where('id_pasien', $id)->update(['deleted_at' => now()]);
+
+    return redirect()->route('pasien.index')->with('success', 'Data Pasien berhasil dihapus');
+}
+
+
+
+
+public function trash()
+{
+    // Menampilkan data yang telah dihapus secara lunak
+    $trashedDatas = DB::table('pasien')->whereNotNull('deleted_at')->get();
+
+    return view('pasien.trashdata')->with('trashedDatas', $trashedDatas);
+}
+public function forceDelete($id)
+{
+    DB::table('pasien')->where('id_pasien', $id)->delete();
+
+    return redirect()->route('pasien.index')->with('success', 'Data Pasien berhasil dihapus permanen');
+}
+
+
 }

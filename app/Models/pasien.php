@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class pasien extends Model
+
 {
+    use HasFactory, SoftDeletes;
         /**
      * The table associated with the model.
      *
@@ -25,4 +27,5 @@ class pasien extends Model
      * @var bool
      */
     public $timestamps = false;
+    protected $dates = ['deleted_at'];
 }

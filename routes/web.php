@@ -33,6 +33,10 @@ Route::post('/pasien/store', [pasienController::class, 'store'])->name('pasien.s
 Route::get('/pasien/edit/{id}', [pasienController::class, 'edit'])->name('pasien.edit');
 Route::post('/pasien/update/{id}', [pasienController::class, 'update'])->name('pasien.update');
 Route::post('/pasien/delete/{id}', [pasienController::class, 'delete'])->name('pasien.delete');
+Route::post('/pasien/forceDelete/{id}', [pasienController::class, 'forceDelete'])->name('pasien.forceDelete');
+
+
+Route::get('/pasien/trash', [pasienController::class, 'trash'])->name('pasien.trash');
 
 
 Route::get('/', [dokterController::class, 'index'])->name('dokter.index');

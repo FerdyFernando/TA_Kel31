@@ -5,6 +5,7 @@ use App\Models\janji_temu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class janji_temuController extends Controller
 {
     public function create()
@@ -82,37 +83,61 @@ class janji_temuController extends Controller
     }
 
     public function delete($id)
-    {
-        try {
-            // Soft delete the record
-            janji_temu::destroy($id);
-            return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil dihapus');
-        } catch (\Exception $e) {
-            dd($e->getMessage()); // Output the error message for debugging
-        }
-    }
-
-    public function restore($id)
 {
-    janji_temu::withTrashed()->where('id_appointment', $id)->restore();
-    return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil direstore');
+    try {
+        // Soft delete the record
+        DB::table('janji_temu')
+            ->where('id_appointment', $id)
+            ->update(['deleted_at' => now()]);
+
+        return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil dihapus');
+    } catch (\Exception $e) {
+        dd($e->getMessage()); // Output the error message for debugging
+    }
+}
+public function restore($id)
+{
+    try {
+        // Restore the soft-deleted record
+        DB::table('janji_temu')
+            ->where('id_appointment', $id)
+            ->update(['deleted_at' => null]);
+
+        return redirect()->route('janji_temu.index')->with('success', 'Data Janji Temu berhasil direstore');
+    } catch (\Exception $e) {
+        dd($e->getMessage()); // Output the error message for debugging
+    }
 }
 
 public function forceDelete($id)
 {
-    janji_temu::withTrashed()->where('id_appointment', $id)->forceDelete();
-    return redirect()->route('janji_temu.trash')->with('success', 'Data Janji Temu berhasil dihapus permanen');
+    try {
+        // Force delete the soft-deleted record
+        DB::table('janji_temu')
+            ->where('id_appointment', $id)
+            ->forceDelete();
+
+        return redirect()->route('janji_temu.trash')->with('success', 'Data Janji Temu berhasil dihapus permanen');
+    } catch (\Exception $e) {
+        dd($e->getMessage()); // Output the error message for debugging
+    }
 }
 
 public function trash()
 {
-    $trashedDatas = janji_temu::onlyTrashed()
-        ->join('dokter', 'janji_temu.id_dokter', '=', 'dokter.id_dokter')
-        ->join('pasien', 'janji_temu.id_pasien', '=', 'pasien.id_pasien')
-        ->select('janji_temu.*', 'dokter.nama_dokter', 'pasien.nama_pasien')
-        ->get();
+    try {
+        // Retrieve soft-deleted records with joins
+        $trashedDatas = DB::table('janji_temu')
+            ->whereNotNull('janji_temu.deleted_at')  // Only soft-deleted records
+            ->join('dokter', 'janji_temu.id_dokter', '=', 'dokter.id_dokter')
+            ->join('pasien', 'janji_temu.id_pasien', '=', 'pasien.id_pasien')
+            ->select('janji_temu.*', 'dokter.nama_dokter', 'pasien.nama_pasien')
+            ->get();
 
-    return view('janji_temu.trashdata')->with('trashedDatas', $trashedDatas);
+        return view('janji_temu.trashdata')->with('trashedDatas', $trashedDatas);
+    } catch (\Exception $e) {
+        dd($e->getMessage()); // Output the error message for debugging
+    }
 }
 
 

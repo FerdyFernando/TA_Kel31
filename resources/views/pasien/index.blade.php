@@ -19,7 +19,6 @@
             <th>Nama</th>
             <th>Alamat</th>
             <th>No. Telp</th>
-            <th>Jadwal Janji Temu</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -30,43 +29,67 @@
             <td>{{ $data->nama_pasien }}</td>
             <td>{{ $data->alamat }}</td>
             <td>{{ $data->no_telp }}</td>
-            <td>{{ $data->tanggal_temu }}</td>
+           
             <td>
-                <a href="{{ route('pasien.edit', $data->id_pasien) }}" type="button"
-                    class="btn btn-warning rounded-3">Ubah</a>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#hapusModal{{ $data->id_pasien }}">
+                <a href="{{ route('pasien.edit', $data->id_pasien) }}" type="button" class="btn btn-warning rounded-3">Ubah</a>
+
+                <!-- Button trigger soft delete modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $data->id_pasien }}">
                     Hapus
                 </button>
+               <!-- Force delete form -->
+               
+                    
+               <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#forceDeleteModal{{ $data->id_pasien }}">Hapus Permanen</button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="hapusModal{{ $data->id_pasien }}" tabindex="-1"
-                    aria-labelledby="hapusModalLabel" aria-hidden="true">
+
+                <!-- Soft delete modal -->
+                <div class="modal fade" id="hapusModal{{ $data->id_pasien }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
                     <div class="modal-dialog text-dark">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="hapusModalLabel">Konfirmasi</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form method="POST" action="{{ route('pasien.delete', $data->id_pasien) }}">
                                 @csrf
                                 <div class="modal-body text-dark">
-                                    Apakah anda yakin ingin menghapus data ini?
+                                    Apakah anda yakin ingin menghapus data ini secara lunak?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                     <button type="submit" class="btn btn-primary">Ya</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+                <!-- Force delete modal -->
+<div class="modal fade" id="forceDeleteModal{{ $data->id_pasien }}" tabindex="-1" aria-labelledby="forceDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-dark">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="forceDeleteModalLabel">Konfirmasi Hapus Permanen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('pasien.forceDelete', $data->id_pasien) }}">
+                @csrf
+                <div class="modal-body text-dark">
+                    Apakah anda yakin ingin menghapus data ini secara permanen?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-danger">Ya, Hapus Permanen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+                
+               
             </td>
-
-
         </tr>
         @endforeach
     </tbody>
