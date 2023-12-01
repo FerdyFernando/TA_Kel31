@@ -66,7 +66,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('janji_temu.trash') }}">Trashed Data</a>
-                    </li>
+                    </li> 
                 </ul>
             </div>
         </div>
